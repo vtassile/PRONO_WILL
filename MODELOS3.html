@@ -1,0 +1,319 @@
+<html>
+
+<head>
+<style type="text/css">
+.knitr .inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.rimage .left {
+  text-align: left;
+}
+.rimage .right {
+  text-align: right;
+}
+.rimage .center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+
+<link rel="stylesheet" href="valentin.css" type="text/css" media="all"> 
+  
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+  
+<style type="text/css">
+.knitr .inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.MathJax_Display {
+    "text-align": "center",
+    margin:       "1em 0em",
+    color:   "#CC0000",
+    padding: "1px 3px",
+      "font-size":  "90%"
+  }
+.MathJax .merror {
+    "background-color": "#FFFF88",
+    color:   "#CC0000",
+    border:  "1px solid #CC0000",
+    padding: "1px 3px",
+    "font-style": "normal",
+    "font-size":  "90%"
+  }
+</style>
+
+<title>Title</title>
+</head>
+
+<body>
+
+<H2>MODELACIÓN</H2>
+
+<p>Las estimaciones correspondientes a los <b>MODELOS CANDIDATOS</b> se realizan a partir de los procedimientos del paquete estadístico R: <b>NLME</b> y <b>NLMER</b>.</p>
+
+<div align="center"><img src="GRAFICO3.png"></div>
+
+<p>El primero de ellos: <b>NLME</b> es una función del paquete NLME que obtiene la verosimilitud a partir de una expansión de Taylor con el método de linealización BLUP propuesto por Linsdtrom et. al. [86]. Los modelos allí propuestos se corresponden a <b>Modelos Mixtos No Lineales</b> con efectos anidados o una estructura de efectos cruzados muy simples, con la posibilidad de modelar directamente la heterocedasticidad y la correlación de los residuales. Una vez ajustado el modelo, las componentes de varianza se evalúan a partir de Criterios de Información (<b>CI</b>) o Razón de Verosimilitud (<b>LRT</b>) en una primera instancia para luego confirmarse, en lo posible, con intervalos de confianza obtenidos a partir del estadístico de Wald. La significancia de los efectos fijos se evalúa a partir de pruebas t basadas en el estadístico de Wald con grados de libertad obtenidos a partir del método Between-Within. No se recomiendan, aquí, pruebas <b>LRT</b> debido a la maximización de la verosimilitud obtenida en los pseudo-datos, es decir en la linealización.</p>
+
+<p>Otro paquete utilizado para realizar las estimaciones es LMER 4 en su versión 1.1-7, a partir de la función <b>NLMER</b> que calcula la función de verosimilitud ML a partír de la Aproximación de LAPLACE para Modelos Mixtos No Lineales multinivel, tanto anidados como cruzados. <b>LMER</b> recurre el paquete NLOPTR para realizar optimizaciones no lineales a partir de varios algoritmos de optimización. En la presente implementación el algoritmo PRAXIS, un algoritmo de optimización local libre de derivadas segundas, es el que se utiliza por presentar las mayores tasas de convergencia exitosas. Allí, además, se general variables dummy para modelar los efectos fijos de los parámetros lo que ha requerido el desarrollo de funciones que cumplan tal cometido. La estructura de componentes de varianza estimada con <b>NLMER</b>, se evalúa  a partir de los <b>CI</b>, mientras que los efectos fijos estimados se evalúan a partir de pruebas de <b>LRT</b> con la corrección sugerida por Stram et. al.[25].</p>
+
+<p>También, eventualmente se realiza para <b>NLMER</b>, un test de hipótesis para cada término fijo a partir de la prueba de Wald en una prueba t con distribución asintótica normal.</p>
+
+<p>La elección final de los Modelos Candidatos está condicionada a la performance de los Criterios Predictivos (<b>CP</b>) obtenidos a partir de la Base de Modelación debido a que el próposito final de los mismos tiene objetivos predictivos.</p>
+
+<p>Los <b>CP</b> se obtienen a partir de funciones creadas a tal fin, junto a otras que recurren a datos sintéticos producidos en simulaciones Monte Carlo uni y multivariadas fundamentadas en descomposición espectral.</p>
+
+<p>La base de <b>COVARIABLES AMBIENTALES</b> se obtiene a partir de datos agrometeorológicos históricos en cada temporada, por medio de funciones que los construyen a partir de criterios de termoacumulación.</p>
+
+<p>El proceso de selección de <b>COVARIABLES AMBIENTALES</b> CANDIDATAS se fundamenta en la existencia de correlaciones entre las predicciónes de los efectos <b>ALEATORIOS</b> a nivel de <b>SITIO</b> y las <b>COVARIABLES AMBIENTALES</b>, las cuales se incorporan en nuevos <b>MODELOS CANDIDATOS</b>.</p>
+
+
+<H2>COMPONENTE ESTRUCTURAL DEL MODELO</H2>
+
+<p>El primer paso para desarrollar un modelo Modelo Mixto No Lineal consiste en proponer la componente estructural más adecuada para el conjunto de datos bajo estudio. Dicha ecuación debe expresar el diámetro ecuatorial en función de los Días Despues de Plena Floración (<b>DDPF</b>), describiendo el período comprendido desde los 40 <b>DDPF</b> hasta 20 días posteriores a la cosecha. De acuerdo a Bramardi et.at.[111],tal cual lo presentado en la siguiente ecuación:</p>
+
+$$Y= 1/(\beta_1+\beta_2 * \beta_3 ^{DDF})$$
+
+
+
+<p>con:</p>
+<ul>
+<li>\(\beta_1 \): parámetro relacionado inversamente con la asíntota superior.</li>
+
+<li>\(\beta_2 \): parámetro que relaciona la asíntota superior (<b>AS</b>) con la inferior (<b>AI</b>).</li>
+
+<li>\(\beta_3 \): parámetro relacionado con la tasa de crecimiento desde los valores ‘iniciales‘ (determinados por la magnitud de 2 y los valores ‘finales‘ (determinados por la magnitud de 1).</li>
+</ul>
+
+<p>A los efectos de mejorar condiciones de convergencia de los algoritmos de optimización reparametrizamos el modelo de la siguiente forma:</p>
+
+$$ Y= 1/( \beta_1 * 0.01+(\beta_2  * 0.01)  (\beta_3 * 0.1)^{DDF})$$
+
+<p>Los efectos <b>FIJOS</b> y <b>ALEATORIOS</b> se proponen a partir de este modelo para cada uno de los parámetros.</p> 
+
+<div align="center"><img src="CURVA2.png"></div>
+
+<H2>MODELO CANDIDATO</H2>
+<br>
+<p>
+<label>SELECCIONE MODELO:</label><br />
+<select name="n_modelo">
+<option value="17">17</option>
+<option value="21">21</option>
+<option value="24">24</option>
+<option value="25">25</option>
+<option value="26">26</option>
+<option value="27">27</option>        
+<option value="30">30</option>
+<option value="32">32</option>
+</select> 
+</p>
+
+<div id="SALIDA_1" class="shiny-html-output"></div>
+<div id="SALIDA_2" class="shiny-html-output"></div>
+<div id="SALIDA_3" class="shiny-html-output"></div>
+
+<br>
+
+
+<H2>CRITERIOS PREDICTIVOS (CP) </H2>
+
+<br>
+
+ <table border="1" class="table">
+        <colgroup>
+           <col />
+           <col />
+           <col />
+           <col />
+           <col />
+           <col />
+           <col />
+           <col />
+           <col />
+           <col />
+        </colgroup>
+        <thead>
+           <tr>
+             <th scope="col"> $$MODELO$$ </th>
+             <th scope="col">$$R2_C$$  </th>
+             <th scope="col"> $$CC_1 $$ </th>
+             <th scope="col">$$CC_2$$  </th>
+             <th scope="col">$$RMSE$$  </th>
+             <th scope="col">$$\bar e$$  </th>
+             <th scope="col">$$\bar e \%$$  </th>
+             <th scope="col">$$\bar e_{abs}$$  </th>
+             <th scope="col">$$\bar e_{abs} \%$$  </th>
+             <th scope="col">$$SD$$  </th>
+           </tr>
+        </thead>
+        <tbody>
+           <tr>
+             <td align="center">17</td>
+             <td>0.9981 </td>
+             <td>0.9990 </td>
+             <td>0.9990 </td>
+             <td>0.6695 </td>
+             <td> -0.0073</td>
+             <td>-0.1260 </td>
+             <td>0.4070 </td>
+             <td> 1.102</td>
+             <td>0.667 </td>
+           </tr>
+           <tr>
+             <td align="center">21 </td>
+             <td>0.9979</td>
+             <td>0.9999</td>
+             <td>0.9999</td>
+             <td>0.6931</td>
+             <td>-0.0113</td>
+             <td>-0.1614</td>
+             <td>0.4262</td>
+             <td>1.156</td>
+             <td>0.694</td>
+           </tr>
+           <tr>
+             <td align="center">24</td>
+             <td>0.9980</td>
+             <td>0.9990</td>
+             <td>0.9990 </td>
+             <td>0.6860 </td>
+             <td>-0.0108</td>
+             <td>-0.1559</td>
+             <td>0.4168</td>
+             <td>1.141</td>
+             <td>0.686</td>
+           </tr>
+           <tr>
+             <td align="center">25 </td>
+             <td> 0.9980</td>
+             <td> 0.9990</td>
+             <td> 0.9990</td>
+             <td> 0.6818 </td>
+             <td>-0.0096 </td>
+             <td>-0.1474 </td>
+             <td>0.4142</td>
+             <td> 1.129</td>
+             <td> 0.681</td>
+           </tr>
+           <tr>
+             <td align="center">26  </td>
+             <td>0.9980</td>
+             <td>0.9990</td>
+             <td>0.9990</td>
+             <td>0.6840</td>
+             <td>-0.0102</td>
+             <td>-0.1511</td>
+             <td>0.4155</td>
+             <td>1.135</td>
+             <td>0.684</td>
+           </tr>
+           <tr>
+             <td align="center">27 </td>
+             <td>0.9980</td>
+             <td>0.9990</td>
+             <td>0.9990</td>
+             <td>0.6787</td>
+             <td>-0.0092</td>
+             <td>-0.1425</td>
+             <td>0.4123</td>
+             <td>1.123</td>
+             <td>0.698</td>
+           </tr>
+           <tr>
+             <td align="center">30 </td>
+             <td>0.9980</td>
+             <td>0.9990</td>
+             <td>0.9990</td>
+             <td>0.6810</td>
+             <td>-0.0091</td>
+             <td>-0.1433</td>
+             <td>0.4137</td>
+             <td>1.126</td>
+             <td>0.681</td>
+           </tr>
+           <tr>
+             <td align="center">32 </td>
+             <td> 0.9980</td>
+             <td> 0.9990</td>
+             <td>0.9990</td>
+             <td>0.6792</td>
+             <td>-0.0091</td>
+             <td>-0.1427</td>
+             <td>0.4126</td>
+             <td>1.123</td>
+             <td>0.679</td>
+           </tr>
+        </tbody> 
+
+ </table>
+
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">summary</span><span class="hl std">(cars)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+</pre></div>
+</div></div>
+
+
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,14 @@
+H2 {
+  font-weight: 500;
+  line-height: 1.1;
+  color: #ad1d28;
+}
+
+body {
+  background-color: #F8F8FF;
+}
+
+table {
+       border:1px solid black;
+       border-collapse:separate;
+       }
