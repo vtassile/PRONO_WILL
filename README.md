@@ -1,4 +1,4 @@
-# APLICACIÓN WEB-PREDICCIÓN DEL CRECIMIENTO DE FRUTOS DE PEPITA
+# PREDICCIÓN DEL CRECIMIENTO DE FRUTOS DE PEPITA
 
 ## INTRODUCCIÓN
 
@@ -8,5 +8,6 @@ Los modelos ajustados se corresponden a modelos mixtos no lineales que incorpora
 
 La aplicación se ha construido en Shiny, un paquete de R que posibilita la construcción de aplicaciones web interactivas. Durante el proceso de elaboración tambíen se consideraron las siguientes tecnologías:
 
+-HTML: Lenguaje de marcado que se utiliza para el desarrollo de páginas Web.
+-CSS: Lenguaje de hojas de estilos creado para controlar el aspecto o presentación de los documentos electrónicos definidos con HTML.
 
-Predicción de Frutos de Pepita-Variedad Williams
