@@ -43,54 +43,21 @@ Los Modelos No Lineales de Efectos Mixtos (**NLME**) constituyen un enfoque ampl
 ## MÉTRICAS DE COMPARACIÓN DE MODELOS
 
 Las distribuciones aproximadas de los estimadores se utilizan para producir pruebas de hipótesis e intervalos de confianza para el modelo. La selección del modelo óptimo entre múltiples modelos candidatos representa un importante desafio, esta suele realizarse a partir de los tradicionales **CI** y la prueba **LRT**, los cuales se obtienen como funciones de las verosimilitudes marginales.</p>
-Por otra parte, se dispone también de los llamados Criterios Predictivos (**CP**). Estos hacen uso de valores predichos que permiten construir métricas de la capacidad predictiva. Los <b>CP</b> más utilizados son: Coeficiente de Correlación ( **R^2**), Coeficiente de Concordancia ($ CCC $), Suma de Cuadrados de Errores de Predicción ( $PRESS$), Raíz del Cuadrado Medio del Error ($ RMSE $), Sesgo Medio ($ \bar e \ $, Sesgo Medio Relativo ( $ \bar e \% $), Sesgo Medio Absoluto ( $ \bar e_{abs} $) y Sesgo Medio Relativo Absoluto ( $ \bar e_{abs} \% $).
+Por otra parte, se dispone también de los llamados Criterios Predictivos (**CP**). Estos hacen uso de valores predichos que permiten construir métricas de la capacidad predictiva. Los <b>CP</b> más utilizados son: Coeficiente de Correlación, Coeficiente de Concordancia, Suma de Cuadrados de Errores de Predicción, Raíz del Cuadrado Medio del Error, Sesgo Medio, Sesgo Medio Relativo, Sesgo Medio Absoluto y Sesgo Medio Relativo Absoluto.
 
 ## CRITERIOS PREDICTIVOS
 
-En el análisis de regresión por mínimos cuadrados clásico, el coeficiente de determinación ($ R^2 $, o su forma ajustada $ R^2_{aj} $) es extensamente utilizado a pesar de sus limitaciones como las descriptas por <i>Lvalseth </i>. $ R^2 $, $ RMSE$, y los gráficos de residuales son probablemente las medidas de bondad de ajuste más comúnmente utilizadas en modelación. Aquí, $ R^2 $ es muy popular ya que representa la proporción de la variación total en la variable dependiente que es explicada por un modelo ajustado. Es una medida directa y fácilmente comprensible del éxito en la predicción de la variable dependiente por las variables independientes.
-Sin embargo, para los modelos mixtos en general, y los <b>NLME</b> en particular, el concepto de variación total puede ser definida de diferentes maneras dependiendo del criterio y el método utilizado en la estimación. Los modelos mixtos pueden tener varios componentes de varianza, además el modelo ajustado puede promediar un único modelo para la población, o un modelo por cada individuo muestreado dentro de la población. No hay una simple definición de $ R^2 $ para modelos mixtos, y varios $ R^2 $ han sido propuestos. Estos, sin embargo, pueden indicar cosas muy diferentes, con interpretaciones también diferentes.
+En el análisis de regresión por mínimos cuadrados clásico, el coeficiente de determinación , o su forma ajustada  es extensamente utilizado a pesar de sus limitaciones como las descriptas por <i>Lvalseth </i>. R^2 , RMSE, y los gráficos de residuales son probablemente las medidas de bondad de ajuste más comúnmente utilizadas en modelación. Aquí, R^2  es muy popular ya que representa la proporción de la variación total en la variable dependiente que es explicada por un modelo ajustado. Es una medida directa y fácilmente comprensible del éxito en la predicción de la variable dependiente por las variables independientes.
+Sin embargo, para los modelos mixtos en general, y los <b>NLME</b> en particular, el concepto de variación total puede ser definida de diferentes maneras dependiendo del criterio y el método utilizado en la estimación. Los modelos mixtos pueden tener varios componentes de varianza, además el modelo ajustado puede promediar un único modelo para la población, o un modelo por cada individuo muestreado dentro de la población. No hay una simple definición de  R^2  para modelos mixtos, y varios  R^2  han sido propuestos. Estos, sin embargo, pueden indicar cosas muy diferentes, con interpretaciones también diferentes.
 Mientras que los estadísticos clásicos como  <b>LRT </b>,  <b>AIC </b> y  <b>BIC </b> son utilizados generalmente para comparar  <b>NLME </b> alternativos, los valores actuales de estos estadísticos poco dicen acerca de lo bueno o malo que es un modelo. Ellos son imposibles de interpretar sin un marco de referencia [10].
-
-<p>He aquí una reseña de los Criterios Predictivos propuestos para su utilización en el presente trabajo:<p>
-
-<ul>
-<li> COEFICIENTE $ R^2 $ CONDICIONAL: Este coeficiente, también referenciado como eficiencia de modelado o índice de ajuste puede ser obtenido como:
-$$ R_C^2 =1- (\sum_{i=1}^{m} \sum_{j=1}^{n_i} (Y_{ij}-\hat{Y}_{ij})^2)/ (\sum_{i=1}^{m} \sum_{j=1}^{n_i} (Y_{ij}-\bar{Y})^2) $$
-donde $Y_{ij}$ y $\hat{Y}_{ij}$ se corresponden al $j$esimo valor observado y predicho respectivamente para el sujeto $i$ y $\bar{Y}$ la media general para los valores observados. $R_C^2$ toma en cuenta de esta manera tanto los efectos fijos como los aleatorios a través de las predicciones $\hat{Y}_{ij}$.</li>
-<li> $CC_1$: El \acs{ccc} es una medida que combina una medida del grado de sesgo y precisión en las que pares de valores de $Y_I$ y $\hat{Y}_i$ caen en la línea identidad, también conocida como la línea de concordancia, que parte del origen con un ángulo de 45 grados. <i>Vonesh et. al.</i>  proponen el uso de $CC_1$ denotado aquí como $CC_1$:
-$$  CC_1 =1- ( \sum_{i=1}^{m} \sum_{j=1}^{n_i} (Y_{ij}-\hat{Y}_{ij})^2)/
-  (  \sum_{i=1}^{m} \sum_{j=1}^{n_i} (Y_{ij}-\bar{Y})^2 +
-  \sum_{i=1}^{m} \sum_{j=1}^{n_i} (Y_{ij}-\bar{\hat{Y}})^2 +
-  N (\bar{Y}-\bar{\hat{Y}})^2   
-  )$$
-Los valores de $CC_1$ satisfacen: $-1 \leq CC_1 \leq1$. Un valor de $CC_1=1$ o $CC_1=-1$ corresponde a una perfecta concordancia entre los valores observados y predichos directa e inversa respectivamente. Un valor de $CC_1=0$ se corresponde a una falta de concordancia y cualquier valor $CC_1 \leq 0$ indica una falta de ajuste.\\
-Recientemente, un \acs{ccc} mejorado es propuesto por <i>Liao</i>:
-$$ CC_2 = \rho (4 S_1 S_2 - \rho(S_1^2+S_2^2))/  ((2-\rho) (S_1^2+S_2^2)+(\bar{Y}-\bar{\hat{Y}})^2) $$ 
-donde $\rho = S_{12}/(S_1 S_2)$, con $S_1$,$S_2$ y $S_{12}$ varianzas y covarianzas asociadas con $Y_{iy}$ y $\hat{Y}_ij$ </li>
-<li> $RMSE$:
-$$ RSME = \sqrt{(1/N)  \sum_{i=1}^{m} \sum_{j=1}^{n_i} (Y_{ij}-\hat{Y}_{ij})^2}$$ </li>
-<li> Sesgo Medio ($ \bar e \ $):
-$$ \bar{e} = (1/N) \sum_{i=1}^{m} \sum_{j=1}^{n_i} (Y_{ij}-\hat{Y}_{ij})$$ </li>
-<li> Precisión de los Errores($ SD $):
-$$ SD = \sqrt{(1/N) \sum_{i=1}^{m} \sum_{j=1}^{n_i} (e_{ij}-\bar{e})^2     } $$ </li>
-<li> Precisión Global de los Errores ($ \delta $ ):
-$$ \delta =\bar{e}^2 + SD^2 $$ </li>
-<li> Sesgo Medio Relativo ($ \bar e \% $ ) :
-$$ \bar{e} \% = 100(\bar{Y}-\bar{\hat{Y}})/ (\bar{Y}) $$ </li>
-<li> Sesgo Medio Absoluto ($ \bar e_{abs} $):
-$$ \bar{e} = (1/N) \sum_{i=1}^{m} \sum_{j=1}^{n_i} \mid  Y_{ij}-\hat{Y}_{ij} \mid $$ </li>
-<li> Sesgo Medio Relativo Absoluto ($ \bar e_{abs} \% $) :
-$$ \bar{e} \% = 100 (\mid \bar{Y}-\bar{\hat{Y}} \mid  ) /  (\bar{Y})  $$ </li> 
-</ul>
-
 
 <H2>MÉTODOS PARA VALIDAR MODELOS </H2>
 
 <p> Para realizar predicciones en un \acs{nlme} es necesario realizar un procedimiento en dos etapas:
 
 <ul>
-<li> La <b>PRIMERA ETAPA</b> consiste en calibrar el modelo que se ha ajustado, lo que involucra la predicción de los efectos aleatorios ($EBE$) para los sujetos de interés. Estos sujetos pueden ser nuevos individuos, es decir individuos no utilizados en el procedimiento de ajuste del modelo.
- Para ello se requieren algunos datos de estos individuos para poder calibrar el modelo, pero generalmente la cantidad disponible de estos es menor a la presente en el ajuste del modelo (<i> Huang</i>).</li>
+<li> La <b>PRIMERA ETAPA</b> consiste en calibrar el modelo que se ha ajustado, lo que involucra la predicción de los efectos aleatorios (**EBE**) para los sujetos de interés. Estos sujetos pueden ser nuevos individuos, es decir individuos no utilizados en el procedimiento de ajuste del modelo.
+ Para ello se requieren algunos datos de estos individuos para poder calibrar el modelo, pero generalmente la cantidad disponible de estos es menor a la presente en el ajuste del modelo (**Huang**).</li>
 
 <li> La <b>SEGUNDA ETAPA</b> consiste en predecir el valor de la variable de respuesta con las estimaciones de los parámetros de los efectos fijos obtenidos del modelo ajustado, las predicciones de los efectos aleatorios resultantes de la calibración del modelo y el modelo en cuestión.</li>
 
