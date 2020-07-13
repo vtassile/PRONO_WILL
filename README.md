@@ -18,7 +18,7 @@ La aplicación se ha construido en Shiny, un paquete de R que posibilita la cons
 
 R: Un entorno y lenguaje de programación con un enfoque al análisis estadístico.
 
-##MOTIVACIÓN
+## MOTIVACIÓN
 
 El conocimiento del peso final de frutos con antelación a la cosecha es una información de vital importancia por las consecuencias que esta tiene sobre las estrategias de manejo del monte frutal, las tareas de empaque y la logística de comercialización. Es por ello que la predicción de la distribución final del tamaño de frutos, a partir de muestreos previos a la cosecha, es una práctica usual en las principales regiones de producción frutícola.
 
@@ -28,24 +28,24 @@ Existe además, un nivel de variabilidad estocástica en el crecimiento de los f
 
 La información sobre los que se desarrolla el presente trabajo es el producto de una extensa labor desarrollada por los integrantes del Área de Estadística de la Facultad de Ciencias Agrarias de la Universidad Nacional del Comahue (UNCo) . Los datos recopilados han sido material de estudio de varios proyectos de investigación y algunos de ellos, de la tesis de Maestría del Dr. Sergio Bramardi. Posteriormente estos se han integrado a la base de datos del Programa de Pronóstico de Producción de Frutos de Pepita de las Provincias de Rio Negro y Neuquén (PPPRNN).
 
-##PREDICCIÓN DEL TAMAÑO DEL FRUTO
+## PREDICCIÓN DEL TAMAÑO DEL FRUTO
 
 Entre los factores que definen la calidad de los frutos, el tamaño reviste una característica de gran importancia económica, diferencias en pocos gramos en el peso medio de los frutos representan importantes pérdidas en los retornos por exportación. Las diferencias en tamaños entre los frutos, se debe principalmente al número y tamaño de las células de los frutos. En el cultivar William’s es importante disponer, al inicio de la cosecha, de una elevada proporción de frutos con tamaños apropiados a los requerimientos comerciales. El manejo tradicional de la cosecha que se realiza en la región del Alto Valle, es efectuando varias “pasadas” seguidas de un riego para incrementar el tamaño de los frutos, esto incrementa los costos. Además, se deteriora la calidad de la producción por el avance de la madurez de los frutos recolectados en las últimas “pasadas”. Apuntar a realizar la cosecha en dos “pasadas” debería ser considerado como una meta de máxima. Al escenario descrito se suma la concurrencia en las plantas de empaque, a fines del mes de enero, de importantes volúmenes de manzanas Royal Gala y otros clones mejorados, lo que complica sustancialmente su manejo. En la fruticultura actual, los programas de raleo de frutos son de vital importancia para la obtención de fruta de alta calidad que permita al productor competir en el mercado internacional.
 
 Por otra parte el conocimiento anticipado de la distribución de tamaños posibilita la confección de estrategias de manejo en post-cosecha de empaque, conservación y la logística de comercialización ya que el precio diferencial por frutos de distintos tamaños comerciales es muy marcada. La organización de una logística de comercialización acorde a los tamaños predichos crea ventajas competitivas importantes posibilitando reorientar acuerdos comerciales previos a la recolección de los frutos.
 
 
-##MODELOS NO LINEALES DE EFECTOS MIXTOS
+## MODELOS NO LINEALES DE EFECTOS MIXTOS
 
 Los Modelos No Lineales de Efectos Mixtos (**NLME**) constituyen un enfoque ampliamente utilizado en la actualidad para el análisis de medidas repetidas cuando el interés se centra en características específicas de los individuos. Históricamente estos modelos han recibido una gran atención en la literatura estadística a finales de 1980, desarrollándose una serie de nuevos métodos computacionales para su tratamiento en la década de 1990. En la actualidad, los **NLME** son ampliamente utilizados en numerosos campos, como biología, agricultura, medio ambiente, medicina y economía, y están disponibles a través de varios paquetes de software.
 
 
-MÉTRICAS DE COMPARACIÓN DE MODELOS
+## MÉTRICAS DE COMPARACIÓN DE MODELOS
 
 Las distribuciones aproximadas de los estimadores se utilizan para producir pruebas de hipótesis e intervalos de confianza para el modelo. La selección del modelo óptimo entre múltiples modelos candidatos representa un importante desafio, esta suele realizarse a partir de los tradicionales **CI** y la prueba **LRT**, los cuales se obtienen como funciones de las verosimilitudes marginales.</p>
-Por otra parte, se dispone también de los llamados Criterios Predictivos (**CP**). Estos hacen uso de valores predichos que permiten construir métricas de la capacidad predictiva. Los <b>CP</b> más utilizados son: Coeficiente de Correlación ( $ R^2 $), Coeficiente de Concordancia ($ CCC $), Suma de Cuadrados de Errores de Predicción ( $PRESS$), Raíz del Cuadrado Medio del Error ($ RMSE $), Sesgo Medio ($ \bar e \ $, Sesgo Medio Relativo ( $ \bar e \% $), Sesgo Medio Absoluto ( $ \bar e_{abs} $) y Sesgo Medio Relativo Absoluto ( $ \bar e_{abs} \% $).
+Por otra parte, se dispone también de los llamados Criterios Predictivos (**CP**). Estos hacen uso de valores predichos que permiten construir métricas de la capacidad predictiva. Los <b>CP</b> más utilizados son: Coeficiente de Correlación ( $R^2$), Coeficiente de Concordancia ($ CCC $), Suma de Cuadrados de Errores de Predicción ( $PRESS$), Raíz del Cuadrado Medio del Error ($ RMSE $), Sesgo Medio ($ \bar e \ $, Sesgo Medio Relativo ( $ \bar e \% $), Sesgo Medio Absoluto ( $ \bar e_{abs} $) y Sesgo Medio Relativo Absoluto ( $ \bar e_{abs} \% $).
 
-##CRITERIOS PREDICTIVOS
+## CRITERIOS PREDICTIVOS
 
 En el análisis de regresión por mínimos cuadrados clásico, el coeficiente de determinación ($ R^2 $, o su forma ajustada $ R^2_{aj} $) es extensamente utilizado a pesar de sus limitaciones como las descriptas por <i>Lvalseth </i>. $ R^2 $, $ RMSE$, y los gráficos de residuales son probablemente las medidas de bondad de ajuste más comúnmente utilizadas en modelación. Aquí, $ R^2 $ es muy popular ya que representa la proporción de la variación total en la variable dependiente que es explicada por un modelo ajustado. Es una medida directa y fácilmente comprensible del éxito en la predicción de la variable dependiente por las variables independientes.
 Sin embargo, para los modelos mixtos en general, y los <b>NLME</b> en particular, el concepto de variación total puede ser definida de diferentes maneras dependiendo del criterio y el método utilizado en la estimación. Los modelos mixtos pueden tener varios componentes de varianza, además el modelo ajustado puede promediar un único modelo para la población, o un modelo por cada individuo muestreado dentro de la población. No hay una simple definición de $ R^2 $ para modelos mixtos, y varios $ R^2 $ han sido propuestos. Estos, sin embargo, pueden indicar cosas muy diferentes, con interpretaciones también diferentes.
