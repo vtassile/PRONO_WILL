@@ -43,7 +43,7 @@ Los Modelos No Lineales de Efectos Mixtos (**NLME**) constituyen un enfoque ampl
 ## MÉTRICAS DE COMPARACIÓN DE MODELOS
 
 Las distribuciones aproximadas de los estimadores se utilizan para producir pruebas de hipótesis e intervalos de confianza para el modelo. La selección del modelo óptimo entre múltiples modelos candidatos representa un importante desafio, esta suele realizarse a partir de los tradicionales **CI** y la prueba **LRT**, los cuales se obtienen como funciones de las verosimilitudes marginales.</p>
-Por otra parte, se dispone también de los llamados Criterios Predictivos (**CP**). Estos hacen uso de valores predichos que permiten construir métricas de la capacidad predictiva. Los <b>CP</b> más utilizados son: Coeficiente de Correlación ( $R^2$), Coeficiente de Concordancia ($ CCC $), Suma de Cuadrados de Errores de Predicción ( $PRESS$), Raíz del Cuadrado Medio del Error ($ RMSE $), Sesgo Medio ($ \bar e \ $, Sesgo Medio Relativo ( $ \bar e \% $), Sesgo Medio Absoluto ( $ \bar e_{abs} $) y Sesgo Medio Relativo Absoluto ( $ \bar e_{abs} \% $).
+Por otra parte, se dispone también de los llamados Criterios Predictivos (**CP**). Estos hacen uso de valores predichos que permiten construir métricas de la capacidad predictiva. Los <b>CP</b> más utilizados son: Coeficiente de Correlación ( **R^2**), Coeficiente de Concordancia ($ CCC $), Suma de Cuadrados de Errores de Predicción ( $PRESS$), Raíz del Cuadrado Medio del Error ($ RMSE $), Sesgo Medio ($ \bar e \ $, Sesgo Medio Relativo ( $ \bar e \% $), Sesgo Medio Absoluto ( $ \bar e_{abs} $) y Sesgo Medio Relativo Absoluto ( $ \bar e_{abs} \% $).
 
 ## CRITERIOS PREDICTIVOS
 
